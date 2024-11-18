@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+      html, body {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+      #map {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+    <style>
+    .legend {
+  padding: 4px 6px;
+  font: 12px Arial, Helvetica, sans-serif;
+  background: white;
+  background: rgba(255, 255, 255, 0.8);
+  line-height: 22px;
+  color: #555;
+}
+.legend h4 {
+  text-align: center;
+  font-size: 14px;
+  margin: 2px 12px 8px;
+  color: #777;
+}
+
+.legend span {
+  position: relative;
+  bottom: 3px;
+}
+
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin: 0 8px 0 0;
+  opacity: 0.7;
+}
+
+.legend i.icon {
+  background-size: 18px;
+  background-color: rgba(255, 255, 255, 1);
+}
+  </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script type="text/javascript">
+	       //OSM+Carto tiles attribution and URL
+	    	var osmLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+		var osmAttrib = '&copy; ' + osmLink;
+	   
+	        var placeholderLink = '<a href="http://openstreetmap.org">Placeholder link to publication</a>'
+		
+		var cartoLink = '<a href="http://cartodb.com/attributions">CartoDB</a>';
+		var cartoURL = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+		var cartoAttrib = '&copy; ' + osmLink + ' &copy; ' + cartoLink + ' &nbsp; ' + placeholderLink;
+	    		
+		//USGS tiles attribution and URL
+		var USGSURL = 'https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}';
+		var USGSAttrib = 'Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>' + placeholderLink;
+
+		//Creation of map tiles
+		var cartoMap = L.tileLayer(cartoURL, {attribution: cartoAttrib});
+		var USGSMap = L.tileLayer(USGSURL, {attribution: USGSAttrib,
+	       	        subdomains: 'abcd',
+			minZoom: 0,
+			maxZoom: 20,
+			ext: 'png'});
+	    
+	        //geojson files
+	         var mexUrl = 'https://spatialepidemiology.github.io/GWR_screening_HL_groups/assets/mex_hot_gj.geojson';
+	         var prUrl = 'https://spatialepidemiology.github.io/GWR_screening_HL_groups/assets/pr_hot_gj.geojson';
+	    	 var censUrl = 'https://spatialepidemiology.github.io/GWR_screening_HL_groups/assets/cens_hot_gj.geojson';
+	    	 var domUrl = 'https://spatialepidemiology.github.io/GWR_screening_HL_groups/assets/dom_hot_gj.geojson';
+	  	 var cubUrl = 'https://spatialepidemiology.github.io/GWR_screening_HL_groups/assets/cub_hot_gj.geojson';
+	         //color style for geojsons
+                 var myStyle = {'color':'#FF0000','weight':1};
+	    
+	         //adding map
+                 var map = L.map('map',{layers: [cartoMap]}).setView([38.4, -95], 4.5);
+	    
+	         //defining geojson layers
+                 var mexLayer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
+                 }});
+                 var prLayer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
+                 }});
+                 var censLayer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
+                 }});
+                 var domLayer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
+                 }});
+                 var cubLayer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
+                 }});
+	    
+	 //adding geojsons to map   
+         $.getJSON(mexUrl, function(data) {			
+		mexLayer.addData(data).addTo(map);
+	 });
+         $.getJSON(prUrl, function(data) {			
+		prLayer.addData(data).addTo(map);
+ 	 });
+         $.getJSON(censUrl, function(data) {			
+		censLayer.addData(data).addTo(map);
+	 });
+         $.getJSON(domUrl, function(data) {			
+		domLayer.addData(data).addTo(map);
+	 });
+         $.getJSON(cubUrl, function(data) {			
+		cubLayer.addData(data).addTo(map);
+	 });
+	 
+	 //defining layers for control
+         var baseLayers = {
+		"Carto Light": cartoMap,
+		"USGS Imagery": USGSMap
+		};
+	    
+	var overLayers = {
+		"Mexican": mexLayer,
+		"Puerto Rican": prLayer,
+		"Central/South American": censLayer,
+		"Dominican": domLayer,
+		"Cuban": cubLayer,
+			
+		};
+        //layer control tool
+        L.control.layers(baseLayers,overLayers,{collapsed:false}).addTo(map);
+ 
+        L.control.scale({imperial: true, metric: true}).addTo(map);
+        
+	//legend options
+        var legend = L.control({ position: "bottomright"});
+        //adding legend to map
+        legend.onAdd = function(map) {
+          var div = L.DomUtil.create("div", "legend");
+          div.innerHTML += "<h4>Hispanic/Latino group CRC screening GWR results</h4>";
+          div.innerHTML += '<i style="background: #FF0000"></i><span>Priority zones</span><br>';
+         return div;
+         };
+
+         legend.addTo(map);
+
+    </script>
+  </body>
+</html>
