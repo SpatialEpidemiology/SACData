@@ -143,13 +143,13 @@
 		pu16Layer.addData(data).addTo(map);
 	 });
          $.getJSON(pu19Url, function(data) {			
-		mexLayer.addData(data).addTo(map);
+		pu19Layer.addData(data).addTo(map);
 	 });
          $.getJSON(ne16Url, function(data) {			
 		ne16Layer.addData(data).addTo(map);
  	 });
          $.getJSON(ne19Url, function(data) {			
-		censLayer.addData(data).addTo(map);
+		ne19Layer.addData(data).addTo(map);
 	 });
          $.getJSON(c1_16Url, function(data) {			
 		c1_16Layer.addData(data).addTo(map);
@@ -165,11 +165,16 @@
 		};
 	    
 	var overLayers = {
-		"Mexican": mexLayer,
-		"Puerto Rican": prLayer,
-		"Central/South American": censLayer,
-		"Dominican": domLayer,
-		"Cuban": cubLayer,
+		"Primary Care 2016": pc16Layer,
+		"Primary Care 2019": pc19Layer,
+		"Specialty Care 2016": sc16Layer,
+		"Specialty Care 2019": sc19Layer,
+		"Pulmonology 2016": pu16Layer,
+		"Pulmonology 2019": pu19Layer,
+		"Nephrology 2016": ne16Layer,
+		"Nephrology 2019": ne19Layer,
+		"Cancer Care 2016": c1_16Layer,
+		"Cancer Care 2019": c1_19Layer,
 			
 		};
         //layer control tool
