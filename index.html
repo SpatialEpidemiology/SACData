@@ -88,15 +88,16 @@
 	    	 var ne19Url = 'https://spatialepidemiology.github.io/SACData/assets/ne_tr19_tr.geojson';
 	    	 var c1_16Url = 'https://spatialepidemiology.github.io/SACData/assets/c1_tr16_tr.geojson';
 	    	 var c1_19Url = 'https://spatialepidemiology.github.io/SACData/assets/c1_tr19_tr.geojson';	    
-	        //color style for geojsons
-                 var myStyle = {'color':'#FF0000','weight':1};
 	    
 	         //adding map
                  var map = L.map('map',{layers: [cartoMap]}).setView([38.4, -95], 4.5);
 	    
 	         //defining geojson layers
-                 var pc16Layer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
-                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
+                 var pc16Layer = L.geoJson(null,{
+			 style: function(feature) {
+				switch (feature.properties.weighted_SA_final_100k), 
+				onEachFeature: function (f, l) {
+                		 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
                  var pc19Layer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
