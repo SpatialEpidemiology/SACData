@@ -88,42 +88,58 @@
 	    	 var ne19Url = 'https://spatialepidemiology.github.io/SACData/assets/ne_tr19_tr.geojson';
 	    	 var c1_16Url = 'https://spatialepidemiology.github.io/SACData/assets/c1_tr16_tr.geojson';
 	    	 var c1_19Url = 'https://spatialepidemiology.github.io/SACData/assets/c1_tr19_tr.geojson';	    
-	    
+	         // choropleth style
+	         function getColor(d) {
+                    return d > 300 ? '#fde725' :
+                     d > 250 ? '#90d743' :
+                     d > 200 ? '#35b779' :
+                     d > 150 ? '#21918c' :
+                     d >  100 ? '#31688e':
+                     d > 50 ?   '#443983':
+                                '#440154';
+                 }
+	        function style(feature) {
+                   return {
+                   fillColor: getColor(feature.properties.density),
+                    weight: 2,
+                    opacity: 1,
+                    color: 'white',
+                    dashArray: '3',
+                    fillOpacity: 0.7
+                   };
+                  }
 	         //adding map
                  var map = L.map('map',{layers: [cartoMap]}).setView([38.4, -95], 4.5);
 	    
 	         //defining geojson layers
-                 var pc16Layer = L.geoJson(null,{
-			 style: function(feature) {
-				switch (feature.properties.weighted_SA_final_100k), 
-				onEachFeature: function (f, l) {
-                		 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
-                 }});
-                 var pc19Layer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 var pc16Layer = L.geoJson(null,{style:style, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var sc16Layer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 var pc19Layer = L.geoJson(null,{style:style, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var sc19Layer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 var sc16Layer = L.geoJson(null,{style:style, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var pu16Layer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 var sc19Layer = L.geoJson(null,{style:style, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var pu19Layer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 var pu16Layer = L.geoJson(null,{style:style, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var ne16Layer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 var pu19Layer = L.geoJson(null,{style:style, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var ne19Layer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 var ne16Layer = L.geoJson(null,{style:style, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var c1_16Layer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 var ne19Layer = L.geoJson(null,{style:style, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var c1_19Layer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 var c1_16Layer = L.geoJson(null,{style:style, onEachFeature: function (f, l) {
+                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
+                 }});
+                 var c1_19Layer = L.geoJson(null,{style:style, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
 	    
