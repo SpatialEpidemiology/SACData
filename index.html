@@ -78,49 +78,84 @@
 			ext: 'png'});
 	    
 	        //geojson files
-	         var mexUrl = 'https://spatialepidemiology.github.io/GWR_screening_HL_groups/assets/mex_hot_gj.geojson';
-	         var prUrl = 'https://spatialepidemiology.github.io/GWR_screening_HL_groups/assets/pr_hot_gj.geojson';
-	    	 var censUrl = 'https://spatialepidemiology.github.io/GWR_screening_HL_groups/assets/cens_hot_gj.geojson';
-	    	 var domUrl = 'https://spatialepidemiology.github.io/GWR_screening_HL_groups/assets/dom_hot_gj.geojson';
-	  	 var cubUrl = 'https://spatialepidemiology.github.io/GWR_screening_HL_groups/assets/cub_hot_gj.geojson';
-	         //color style for geojsons
+	         var pc16Url = 'https://spatialepidemiology.github.io/SACData/assets/pc_tr16_tr.geojson';
+	         var pc19Url = 'https://spatialepidemiology.github.io/SACData/assets/pc_tr19_tr.geojson';
+	    	 var sc16Url = 'https://spatialepidemiology.github.io/SACData/assets/sc_tr16_tr.geojson';
+	    	 var sc19Url = 'https://spatialepidemiology.github.io/SACData/assets/sc_tr19_tr.geojson';
+	         var pu16Url = 'https://spatialepidemiology.github.io/SACData/assets/pu_tr16_tr.geojson';
+	         var pu19Url = 'https://spatialepidemiology.github.io/SACData/assets/pu_tr19_tr.geojson';
+	    	 var ne16Url = 'https://spatialepidemiology.github.io/SACData/assets/ne_tr16_tr.geojson';
+	    	 var ne19Url = 'https://spatialepidemiology.github.io/SACData/assets/ne_tr19_tr.geojson';
+	    	 var c1_16Url = 'https://spatialepidemiology.github.io/SACData/assets/c1_tr16_tr.geojson';
+	    	 var c1_19Url = 'https://spatialepidemiology.github.io/SACData/assets/c1_tr19_tr.geojson';	    
+	        //color style for geojsons
                  var myStyle = {'color':'#FF0000','weight':1};
 	    
 	         //adding map
                  var map = L.map('map',{layers: [cartoMap]}).setView([38.4, -95], 4.5);
 	    
 	         //defining geojson layers
-                 var mexLayer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 var pc16Layer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var prLayer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 var pc19Layer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var censLayer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 var sc16Layer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var domLayer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 var sc19Layer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var cubLayer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 var pu16Layer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
+                 }});
+                 var pu19Layer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
+                 }});
+                 var ne16Layer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
+                 }});
+                 var ne19Layer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
+                 }});
+                 var c1_16Layer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
+                 }});
+                 var c1_19Layer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
 	    
 	 //adding geojsons to map   
-         $.getJSON(mexUrl, function(data) {			
+         $.getJSON(pc16Url, function(data) {			
+		pc16Layer.addData(data).addTo(map);
+	 });
+         $.getJSON(pc19Url, function(data) {			
+		pc19Layer.addData(data).addTo(map);
+ 	 });
+         $.getJSON(sc16Url, function(data) {			
+		sc16Layer.addData(data).addTo(map);
+	 });
+         $.getJSON(sc19Url, function(data) {			
+		sc19Layer.addData(data).addTo(map);
+	 });
+         $.getJSON(pu16Url, function(data) {			
+		pu16Layer.addData(data).addTo(map);
+	 });
+         $.getJSON(pu19Url, function(data) {			
 		mexLayer.addData(data).addTo(map);
 	 });
-         $.getJSON(prUrl, function(data) {			
-		prLayer.addData(data).addTo(map);
+         $.getJSON(ne16Url, function(data) {			
+		ne16Layer.addData(data).addTo(map);
  	 });
-         $.getJSON(censUrl, function(data) {			
+         $.getJSON(ne19Url, function(data) {			
 		censLayer.addData(data).addTo(map);
 	 });
-         $.getJSON(domUrl, function(data) {			
-		domLayer.addData(data).addTo(map);
+         $.getJSON(c1_16Url, function(data) {			
+		c1_16Layer.addData(data).addTo(map);
 	 });
-         $.getJSON(cubUrl, function(data) {			
-		cubLayer.addData(data).addTo(map);
+         $.getJSON(c1_19Url, function(data) {			
+		c1_19Layer.addData(data).addTo(map);
 	 });
 	 
 	 //defining layers for control
