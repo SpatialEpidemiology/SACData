@@ -78,49 +78,118 @@
 			ext: 'png'});
 	    
 	        //geojson files
-	         var mexUrl = 'https://spatialepidemiology.github.io/GWR_screening_HL_groups/assets/mex_hot_gj.geojson';
-	         var prUrl = 'https://spatialepidemiology.github.io/GWR_screening_HL_groups/assets/pr_hot_gj.geojson';
-	    	 var censUrl = 'https://spatialepidemiology.github.io/GWR_screening_HL_groups/assets/cens_hot_gj.geojson';
-	    	 var domUrl = 'https://spatialepidemiology.github.io/GWR_screening_HL_groups/assets/dom_hot_gj.geojson';
-	  	 var cubUrl = 'https://spatialepidemiology.github.io/GWR_screening_HL_groups/assets/cub_hot_gj.geojson';
-	         //color style for geojsons
-                 var myStyle = {'color':'#FF0000','weight':1};
-	    
+	         var pc16Url = 'https://spatialepidemiology.github.io/SACData/assets/pc_tr16_tr.json';
+	         var pc19Url = 'https://spatialepidemiology.github.io/SACData/assets/pc_tr19_tr.json';
+	    	 var sc16Url = 'https://spatialepidemiology.github.io/SACData/assets/sc_tr16_tr.json';
+	    	 var sc19Url = 'https://spatialepidemiology.github.io/SACData/assets/sc_tr19_tr.json';
+	         var pu16Url = 'https://spatialepidemiology.github.io/SACData/assets/pu_tr16_tr.json';
+	         var pu19Url = 'https://spatialepidemiology.github.io/SACData/assets/pu_tr19_tr.json';
+	    	 var ne16Url = 'https://spatialepidemiology.github.io/SACData/assets/ne_tr16_tr.json';
+	    	 var ne19Url = 'https://spatialepidemiology.github.io/SACData/assets/ne_tr19_tr.json';
+	    	 var c1_16Url = 'https://spatialepidemiology.github.io/SACData/assets/c1_tr19_tr.json';
+	    	 var c1_19Url = 'https://spatialepidemiology.github.io/SACData/assets/c1_tr19_tr.json';	    
+	         // choropleth style
+	         function getColor1(d) {
+                    return d > 300 ? '#fde725' :
+                     d > 250 ? '#90d743' :
+                     d > 200 ? '#35b779' :
+                     d > 150 ? '#21918c' :
+                     d >  100 ? '#31688e':
+                     d > 50 ?   '#443983':
+                                '#440154';
+                    }
+	          function style1(feature) {
+                   return {
+                   fillColor: getColor1(feature.properties.weighted_SA_final_100k),
+		    color: '#00FFFFFF',
+		    opacity: 0,
+		    weight: 0.1,
+                    fillOpacity: 0.7
+                      };
+                   }
+	         function getColor2(d) {
+                    return d > 30 ? '#fde725' :
+                     d > 25 ? '#90d743' :
+                     d > 20 ? '#35b779' :
+                     d > 15 ? '#21918c' :
+                     d >  10 ? '#31688e':
+                     d > 5 ?   '#443983':
+                                '#440154';
+                    }
+	          function style2(feature) {
+                   return {
+                   fillColor: getColor2(feature.properties.weighted_SA_final_100k),
+		    color: '#00FFFFFF',
+		    opacity: 0,
+		    weight: 0.1,
+                    fillOpacity: 0.7
+                      };
+                   }
 	         //adding map
                  var map = L.map('map',{layers: [cartoMap]}).setView([38.4, -95], 4.5);
 	    
 	         //defining geojson layers
-                 var mexLayer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 var pc16Layer = L.geoJson(null,{style:style1, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var prLayer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 var pc19Layer = L.geoJson(null,{style:style1, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var censLayer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 var sc16Layer = L.geoJson(null,{style:style1, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var domLayer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 var sc19Layer = L.geoJson(null,{style:style1, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var cubLayer = L.geoJson(null,{style:myStyle, onEachFeature: function (f, l) {
+                 var pu16Layer = L.geoJson(null,{style:style2, onEachFeature: function (f, l) {
+                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
+                 }});
+                 var pu19Layer = L.geoJson(null,{style:style2, onEachFeature: function (f, l) {
+                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
+                 }});
+                 var ne16Layer = L.geoJson(null,{style:style2, onEachFeature: function (f, l) {
+                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
+                 }});
+                 var ne19Layer = L.geoJson(null,{style:style2, onEachFeature: function (f, l) {
+                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
+                 }});
+                 var c1_16Layer = L.geoJson(null,{style:style2, onEachFeature: function (f, l) {
+                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
+                 }});
+                 var c1_19Layer = L.geoJson(null,{style:style2, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
 	    
 	 //adding geojsons to map   
-         $.getJSON(mexUrl, function(data) {			
-		mexLayer.addData(data).addTo(map);
+         $.getJSON(pc16Url, function(data) {			
+		pc16Layer.addData(data).addTo(map);
 	 });
-         $.getJSON(prUrl, function(data) {			
-		prLayer.addData(data).addTo(map);
+         $.getJSON(pc19Url, function(data) {			
+		pc19Layer.addData(data).addTo(map);
  	 });
-         $.getJSON(censUrl, function(data) {			
-		censLayer.addData(data).addTo(map);
+         $.getJSON(sc16Url, function(data) {			
+		sc16Layer.addData(data).addTo(map);
 	 });
-         $.getJSON(domUrl, function(data) {			
-		domLayer.addData(data).addTo(map);
+         $.getJSON(sc19Url, function(data) {			
+		sc19Layer.addData(data).addTo(map);
 	 });
-         $.getJSON(cubUrl, function(data) {			
-		cubLayer.addData(data).addTo(map);
+         $.getJSON(pu16Url, function(data) {			
+		pu16Layer.addData(data).addTo(map);
+	 });
+         $.getJSON(pu19Url, function(data) {			
+		pu19Layer.addData(data).addTo(map);
+	 });
+         $.getJSON(ne16Url, function(data) {			
+		ne16Layer.addData(data).addTo(map);
+ 	 });
+         $.getJSON(ne19Url, function(data) {			
+		ne19Layer.addData(data).addTo(map);
+	 });
+         $.getJSON(c1_16Url, function(data) {			
+		c1_16Layer.addData(data).addTo(map);
+	 });
+         $.getJSON(c1_19Url, function(data) {			
+		c1_19Layer.addData(data).addTo(map);
 	 });
 	 
 	 //defining layers for control
@@ -130,16 +199,34 @@
 		};
 	    
 	var overLayers = {
-		"Mexican": mexLayer,
-		"Puerto Rican": prLayer,
-		"Central/South American": censLayer,
-		"Dominican": domLayer,
-		"Cuban": cubLayer,
+		"Primary Care 2016": pc16Layer,
+		"Primary Care 2019": pc19Layer,
+		"Specialty Care 2016": sc16Layer,
+		"Specialty Care 2019": sc19Layer,
+		"Pulmonology 2016": pu16Layer,
+		"Pulmonology 2019": pu19Layer,
+		"Nephrology 2016": ne16Layer,
+		"Nephrology 2019": ne19Layer,
+		"Cancer Care 2016": c1_16Layer,
+		"Cancer Care 2019": c1_19Layer,
 			
 		};
+
         //layer control tool
-        L.control.layers(baseLayers,overLayers,{collapsed:false}).addTo(map);
- 
+	var layerControl = L.control.layers(baseLayers,overLayers,{collapsed:false}).addTo(map);
+	var selectedOverlay = pc16Layer;
+            function updateSelectedOverlay(layer) {
+                      setTimeout(function() {
+                      if (selectedOverlay) map.removeLayer(selectedOverlay); 
+		      selectedOverlay = layer;
+                            }, 10);
+                          }
+			map.on('overlayadd', function(event) {
+ 			 updateSelectedOverlay(event.layer)
+			  });
+			map.on('overlayremove', function(event) {
+  			selectedOverlay = null;
+			  });
         L.control.scale({imperial: true, metric: true}).addTo(map);
         
 	//legend options
@@ -147,8 +234,8 @@
         //adding legend to map
         legend.onAdd = function(map) {
           var div = L.DomUtil.create("div", "legend");
-          div.innerHTML += "<h4>Hispanic/Latino group CRC screening GWR results</h4>";
-          div.innerHTML += '<i style="background: #FF0000"></i><span>Priority zones</span><br>';
+          div.innerHTML += "<h4></h4>";
+          div.innerHTML += '<i style="background: #FF0000"></i><span></span><br>';
          return div;
          };
 
