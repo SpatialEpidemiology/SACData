@@ -139,16 +139,16 @@
 	    
 	 //adding geojsons to map   
          $.getJSON(pc16Url, function(data) {			
-		pc16Layer.addData(data).addTo(map);
+		pc16Layer.addData(data);
 	 });
          $.getJSON(pc19Url, function(data) {			
-		pc19Layer.addData(data).addTo(map);
+		pc19Layer.addData(data);
  	 });
          $.getJSON(sc16Url, function(data) {			
-		sc16Layer.addData(data).addTo(map);
+		sc16Layer.addData(data);
 	 });
          $.getJSON(sc19Url, function(data) {			
-		sc19Layer.addData(data).addTo(map);
+		sc19Layer.addData(data);
 	 });
 
 	var primarycare = L.layerGroup([pc16Layer,pc19Layer]);
