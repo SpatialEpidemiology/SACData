@@ -150,7 +150,9 @@
          $.getJSON(sc19Url, function(data) {			
 		sc19Layer.addData(data).addTo(map);
 	 });
-	 
+
+	var primarycare = L.layerGroup([pc16Layer,pc19Layer]);
+	var specialtycare = L.layerGroup([sc16Layer,sc19Layer]);
 	 //defining layers for control
          var baseLayers = {
 		"Carto Light": cartoMap,
@@ -158,10 +160,8 @@
 		};
 	    
 	var overLayers = {
-		"Primary Care 2016": pc16Layer,
-		"Primary Care 2019": pc19Layer,
-		"Specialty Care 2016": sc16Layer,
-		"Specialty Care 2019": sc19Layer		
+		"Primary Care": primarycare,
+		"Specialty Care": specialtycare		
 		};
 
         //layer control tool
