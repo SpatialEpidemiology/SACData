@@ -217,8 +217,7 @@
                  groupCheckboxes: true
                   };
         //layer control tool
-	L.control.layers(baseLayers,{collapsed:false}).addTo(map); 
-	L.control.layers(overLayers,{collapsed:false},options).addTo(map); 
+	L.control.layers(baseLayers,overLayers,{collapsed:false},options).addTo(map); 
         L.control.scale({imperial: true, metric: true}).addTo(map);
         
 	//legend options
