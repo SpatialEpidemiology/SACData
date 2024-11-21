@@ -101,10 +101,6 @@
 	          function style1(feature) {
                    return {
                    fillColor: getColor1(feature.properties.weighted_SA_final_100k),
-                    weight: 0,
-                    opacity: 0,
-                    color: 'white',
-                    dashArray: '3',
                     fillOpacity: 0.7
                       };
                    }
@@ -120,10 +116,6 @@
 	          function style2(feature) {
                    return {
                    fillColor: getColor2(feature.properties.weighted_SA_final_100k),
-                    weight: 0,
-                    opacity: 0,
-                    color: 'white',
-                    dashArray: '3',
                     fillOpacity: 0.7
                       };
                    }
@@ -223,8 +215,8 @@
         //adding legend to map
         legend.onAdd = function(map) {
           var div = L.DomUtil.create("div", "legend");
-          div.innerHTML += "<h4>Hispanic/Latino group CRC screening GWR results</h4>";
-          div.innerHTML += '<i style="background: #FF0000"></i><span>Priority zones</span><br>';
+          div.innerHTML += "<h4></h4>";
+          div.innerHTML += '<i style="background: #FF0000"></i><span></span><br>';
          return div;
          };
 
