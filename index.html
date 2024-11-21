@@ -166,7 +166,7 @@
 
         //layer control tool
 	var layerControl = L.control.layers(baseLayers,overLayers,{collapsed:false}).addTo(map);
-	var selectedOverlay = pc16Layer;
+	var selectedOverlay = primarycare;
             function updateSelectedOverlay(layer) {
                       setTimeout(function() {
                       if (selectedOverlay) map.removeLayer(selectedOverlay); 
