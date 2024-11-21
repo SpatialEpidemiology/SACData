@@ -81,13 +81,7 @@
 	         var pc16Url = 'https://spatialepidemiology.github.io/SACData/assets/pc_tr16_tr.json';
 	         var pc19Url = 'https://spatialepidemiology.github.io/SACData/assets/pc_tr19_tr.json';
 	    	 var sc16Url = 'https://spatialepidemiology.github.io/SACData/assets/sc_tr16_tr.json';
-	    	 var sc19Url = 'https://spatialepidemiology.github.io/SACData/assets/sc_tr19_tr.json';
-	         var pu16Url = 'https://spatialepidemiology.github.io/SACData/assets/pu_tr16_tr.json';
-	         var pu19Url = 'https://spatialepidemiology.github.io/SACData/assets/pu_tr19_tr.json';
-	    	 var ne16Url = 'https://spatialepidemiology.github.io/SACData/assets/ne_tr16_tr.json';
-	    	 var ne19Url = 'https://spatialepidemiology.github.io/SACData/assets/ne_tr19_tr.json';
-	    	 var c1_16Url = 'https://spatialepidemiology.github.io/SACData/assets/c1_tr19_tr.json';
-	    	 var c1_19Url = 'https://spatialepidemiology.github.io/SACData/assets/c1_tr19_tr.json';	    
+	    	 var sc19Url = 'https://spatialepidemiology.github.io/SACData/assets/sc_tr19_tr.json';   
 	         // choropleth style
 	         function getColor1(d) {
                     return d > 300 ? '#fde725' :
@@ -141,24 +135,6 @@
                  var sc19Layer = L.geoJson(null,{style:style1, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var pu16Layer = L.geoJson(null,{style:style2, onEachFeature: function (f, l) {
-                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
-                 }});
-                 var pu19Layer = L.geoJson(null,{style:style2, onEachFeature: function (f, l) {
-                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
-                 }});
-                 var ne16Layer = L.geoJson(null,{style:style2, onEachFeature: function (f, l) {
-                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
-                 }});
-                 var ne19Layer = L.geoJson(null,{style:style2, onEachFeature: function (f, l) {
-                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
-                 }});
-                 var c1_16Layer = L.geoJson(null,{style:style2, onEachFeature: function (f, l) {
-                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
-                 }});
-                 var c1_19Layer = L.geoJson(null,{style:style2, onEachFeature: function (f, l) {
-                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
-                 }});
 	    
 	 //adding geojsons to map   
          $.getJSON(pc16Url, function(data) {			
@@ -173,24 +149,6 @@
          $.getJSON(sc19Url, function(data) {			
 		sc19Layer.addData(data).addTo(map);
 	 });
-         $.getJSON(pu16Url, function(data) {			
-		pu16Layer.addData(data).addTo(map);
-	 });
-         $.getJSON(pu19Url, function(data) {			
-		pu19Layer.addData(data).addTo(map);
-	 });
-         $.getJSON(ne16Url, function(data) {			
-		ne16Layer.addData(data).addTo(map);
- 	 });
-         $.getJSON(ne19Url, function(data) {			
-		ne19Layer.addData(data).addTo(map);
-	 });
-         $.getJSON(c1_16Url, function(data) {			
-		c1_16Layer.addData(data).addTo(map);
-	 });
-         $.getJSON(c1_19Url, function(data) {			
-		c1_19Layer.addData(data).addTo(map);
-	 });
 	 
 	 //defining layers for control
          var baseLayers = {
@@ -202,14 +160,7 @@
 		"Primary Care 2016": pc16Layer,
 		"Primary Care 2019": pc19Layer,
 		"Specialty Care 2016": sc16Layer,
-		"Specialty Care 2019": sc19Layer,
-		"Pulmonology 2016": pu16Layer,
-		"Pulmonology 2019": pu19Layer,
-		"Nephrology 2016": ne16Layer,
-		"Nephrology 2019": ne19Layer,
-		"Cancer Care 2016": c1_16Layer,
-		"Cancer Care 2019": c1_19Layer,
-			
+		"Specialty Care 2019": sc19Layer		
 		};
 
         //layer control tool
