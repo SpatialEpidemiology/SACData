@@ -211,14 +211,21 @@
 		"Cancer Care 2019": c1_19Layer,
 			
 		};
-         var options = {
-                 exclusiveGroups: ["Primary Care 2016"],
-                 // Show a checkbox next to non-exclusive group labels for toggling all
-                 groupCheckboxes: true
-                  };
+
         //layer control tool
-	var layerControl = L.control.groupedLayers(baseLayers,overLayers,{collapsed:false},options).addTo(map); 
-	map.addControl(layerControl);
+	var layerControl = L.control.layers(baseLayers,overLayers,{collapsed:false}).addTo(map);
+	var selectedOverlay = null;
+            function updateSelectedOverlay(layer) {
+                      setTimeout(function() {
+                      if (selectedOverlay) map.removeLayer(selectedOverlay); selectedOverlay = layer;
+                      }, 10);
+                      }
+			map.on('overlayadd', function(event) {
+ 			 updateSelectedOverlay(event.layer)
+			});
+			map.on('overlayremove', function(event) {
+  			selectedOverlay = null;
+			});
         L.control.scale({imperial: true, metric: true}).addTo(map);
         
 	//legend options
