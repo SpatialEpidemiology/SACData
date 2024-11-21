@@ -211,9 +211,13 @@
 		"Cancer Care 2019": c1_19Layer,
 			
 		};
+         var options = {
+                 exclusiveGroups: ["Primary Care 2016"],
+                 // Show a checkbox next to non-exclusive group labels for toggling all
+                 groupCheckboxes: true
+                  };
         //layer control tool
-	L.control.layers(baseLayers).addTo(map); 
-	L.control.layers(overLayers).addTo(map); 
+	L.control.layers(baseLayers, overLayers, {collapsed:false},options).addTo(map); 
         L.control.scale({imperial: true, metric: true}).addTo(map);
         
 	//legend options
