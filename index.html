@@ -225,7 +225,7 @@
  			 updateSelectedOverlay(event.layer)
 			  });
 			map.on('overlayremove', function(event) {
-  			selectedOverlay = null;
+  			selectedOverlay = pc16Layer;
 			  });
         L.control.scale({imperial: true, metric: true}).addTo(map);
         
