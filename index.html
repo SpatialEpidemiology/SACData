@@ -219,7 +219,7 @@
                       setTimeout(function() {
                       if (selectedOverlay) map.removeLayer(selectedOverlay); 
 		      selectedOverlay = layer;
-                            }, 10);
+                            }, 1);
                           }
 			map.on('overlayadd', function(event) {
  			 updateSelectedOverlay(event.layer)
