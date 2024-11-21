@@ -214,7 +214,7 @@
 
         //layer control tool
 	var layerControl = L.control.layers(baseLayers,overLayers,{collapsed:false}).addTo(map);
-	var selectedOverlay = "Primary Care 2016";
+	var selectedOverlay = pc16Layer;
             function updateSelectedOverlay(layer) {
                       setTimeout(function() {
                       if (selectedOverlay) map.removeLayer(selectedOverlay); 
