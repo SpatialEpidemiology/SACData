@@ -219,14 +219,14 @@
                       setTimeout(function() {
                       if (selectedOverlay) map.removeLayer(selectedOverlay); 
 		      selectedOverlay = layer;
-                      }, 10);
-                      }
+                            }, 10);
+                          }
 			map.on('overlayadd', function(event) {
  			 updateSelectedOverlay(event.layer)
-			});
+			  });
 			map.on('overlayremove', function(event) {
   			selectedOverlay = null;
-			});
+			  });
         L.control.scale({imperial: true, metric: true}).addTo(map);
         
 	//legend options
