@@ -43,7 +43,7 @@
 .legend i {
   width: 18px;
   height: 18px;
-  float: right;
+  float: left;
   margin: 0 8px 0 0;
   opacity: 0.7;
 }
@@ -235,7 +235,7 @@
         //adding legend to map
         legend.onAdd = function(map) {
           var div = L.DomUtil.create("div", "legend");
-          div.innerHTML += "<h4>Spatial provider-to-population ratio</h4>";
+          div.innerHTML += "<h4>Spatial P2P ratio</h4>";
           div.innerHTML += '<i style="background: #440154"><50</i><span></span><br>';
 	  div.innerHTML += '<i style="background: #443983">50-99</i><span></span><br>';
 	  div.innerHTML += '<i style="background: #31688e">100-149</i><span></span><br>';
