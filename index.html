@@ -153,29 +153,41 @@
 	    
 	 //adding geojsons to map   
          $.getJSON(pc16Url, function(data) {			
-		pc16Layer.addData(data);
+		pc16LayerComp.addData(data);
 	 });
          $.getJSON(pc19Url, function(data) {			
-		pc19Layer.addData(data);
+		pc19LayerComp.addData(data);
  	 });
          $.getJSON(sc16Url, function(data) {			
-		sc16Layer.addData(data);
+		sc16LayerComp.addData(data);
 	 });
          $.getJSON(sc19Url, function(data) {			
-		sc19Layer.addData(data);
+		sc19LayerComp.addData(data);
+	 });
+         $.getJSON(pc16Url, function(data) {			
+		pc16LayerCar.addData(data);
+	 });
+         $.getJSON(pc19Url, function(data) {			
+		pc19LayerCar.addData(data);
+ 	 });
+         $.getJSON(sc16Url, function(data) {			
+		sc16LayerCar.addData(data);
+	 });
+         $.getJSON(sc19Url, function(data) {			
+		sc19LayerCar.addData(data);
 	 });
 
 	var groupedOverlays = {
   		"Primary Care": {
    		 "2016 Composite": pc16LayerComp,
-		 "2016 Car": pc16LayerCar,
     		 "2019 Composite": pc19LayerComp,
+		 "2016 Car": pc16LayerCar,
 		 "2019 Car": pc19LayerCar
   		},
 		"Specialty Care": {
    		 "2016 Composite": sc16LayerComp,
-		 "2016 Car": sc16LayerCar,
     		 "2019 Composite": sc19LayerComp,
+		 "2016 Car": sc16LayerCar,
 		 "2019 Car": sc19LayerCar
 		}
 		};
