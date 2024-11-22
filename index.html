@@ -115,7 +115,7 @@
                     }
 	          function style2(feature) {
                    return {
-                   fillColor: getColor2(feature.properties.Composite_P2P_Ratio),
+                   fillColor: getColor2(feature.properties.Car_P2P_Ratio),
 		    color: 'black',
 		    opacity: 0.3,
 		    weight: 0.3,
@@ -126,16 +126,28 @@
                  var map = L.map('map',{layers: [cartoMap]}).setView([41.4, -81.7], 8.5);
 	    
 	         //defining geojson layers
-                 var pc16Layer = L.geoJson(null,{style:style1, onEachFeature: function (f, l) {
+                 var pc16LayerComp = L.geoJson(null,{style:style1, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var pc19Layer = L.geoJson(null,{style:style1, onEachFeature: function (f, l) {
+                 var pc19LayerComp = L.geoJson(null,{style:style1, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var sc16Layer = L.geoJson(null,{style:style1, onEachFeature: function (f, l) {
+                 var sc16LayerComp = L.geoJson(null,{style:style1, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var sc19Layer = L.geoJson(null,{style:style1, onEachFeature: function (f, l) {
+                 var sc19LayerComp = L.geoJson(null,{style:style1, onEachFeature: function (f, l) {
+                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
+                 }});
+                 var pc16LayerCar = L.geoJson(null,{style:style2, onEachFeature: function (f, l) {
+                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
+                 }});
+                 var pc19LayerCar = L.geoJson(null,{style:style2, onEachFeature: function (f, l) {
+                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
+                 }});
+                 var sc16LayerCar = L.geoJson(null,{style:style2, onEachFeature: function (f, l) {
+                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
+                 }});
+                 var sc19LayerCar = L.geoJson(null,{style:style2, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
 	    
@@ -155,12 +167,17 @@
 
 	var groupedOverlays = {
   		"Primary Care": {
-   		 "2016": pc16Layer,
-    		 "2019": pc19Layer
+   		 "2016 Composite": pc16LayerComp,
+		 "2016 Car": pc16LayerCar,
+    		 "2019 Composite": pc19LayerComp,
+		 "2019 Car": pc19LayerCar
+		}
   		},
 		"Specialty Care": {
-   		 "2016": sc16Layer,
-    		 "2019": sc19Layer
+   		 "2016 Composite": sc16LayerComp,
+		 "2016 Car": sc16LayerCar,
+    		 "2019 Composite": sc19LayerComp,
+		 "2019 Car": sc19LayerCar
 		}
 		};
  
