@@ -176,7 +176,8 @@
  	 // Make the "Landmarks" group exclusive (use radio inputs)
   	exclusiveGroups: ["Primary Care", "Specialty Care"],
        // Show a checkbox next to non-exclusive group labels for toggling all
-  	groupCheckboxes: true
+  	groupCheckboxes: true,
+	collapsed: false
 	};
 
 	var layers = L.control.groupedLayers(baseLayers, groupedOverlays, options);
