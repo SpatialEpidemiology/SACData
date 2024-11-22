@@ -230,7 +230,7 @@
 	    
        //text box explaining functionality of map
 	L.Control.textbox = L.Control.extend({
-		onAdd: function(map) {
+		onAdd: function(map2) {
 			
 		var text = L.DomUtil.create('div');
 		text.id = "info_text";
@@ -238,7 +238,7 @@
 		return text;
 		},
 
-		onRemove: function(map) {
+		onRemove: function(map2) {
 			// Nothing to do here
 		}
 	});
