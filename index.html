@@ -57,16 +57,14 @@
   <body>
     <div id="map"></div>
     <script type="text/javascript">
-	       //OSM+Carto tiles attribution and URL
-	    	var osmLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
-		var osmAttrib = '&copy; ' + osmLink;
-	   
-	        var placeholderLink = '<a href="http://openstreetmap.org">Placeholder link to publication</a>'
-		
+	       //Carto tiles attribution and URL
 		var cartoLink = '<a href="http://cartodb.com/attributions">CartoDB</a>';
 		var cartoURL = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
 		var cartoAttrib = '&copy; ' + osmLink + ' &copy; ' + cartoLink + ' &nbsp; ' + placeholderLink;
-	    		
+	    
+	        //publication placeholder
+	        var placeholderLink = '<a href="http://openstreetmap.org">Placeholder link to publication</a>'
+		
 		//USGS tiles attribution and URL
 		var USGSURL = 'https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}';
 		var USGSAttrib = 'Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>' + placeholderLink;
@@ -84,7 +82,8 @@
 	         var pc19Url = 'https://spatialepidemiology.github.io/SACData/assets/pc_tr19_tr.json';
 	    	 var sc16Url = 'https://spatialepidemiology.github.io/SACData/assets/sc_tr16_tr.json';
 	    	 var sc19Url = 'https://spatialepidemiology.github.io/SACData/assets/sc_tr19_tr.json';   
-	         // choropleth style
+	    
+	         // choropleth styles
 	         function getColor1(d) {
                     return d > 300 ? '#fde725' :
                      d > 250 ? '#90d743' :
@@ -123,6 +122,7 @@
                     fillOpacity: 0.5
                       };
                    }
+	    
 	         //adding map
                  var map = L.map('map',{layers: [cartoMap]}).setView([41.4, -81.7], 8.5);
 	    
@@ -177,8 +177,8 @@
          $.getJSON(sc19Url, function(data) {			
 		sc19LayerCar.addData(data);
 	 });
-
-	var groupedOverlays = {
+        //creating grouped overlayers
+	 var groupedOverlays = {
   		"Primary Care": {
    		 "2016 Composite": pc16LayerComp,
     		 "2019 Composite": pc19LayerComp,
@@ -193,22 +193,21 @@
 		}
 		};
  
-	 //defining layers for control
+	 //defining base layers for control
          var baseLayers = {
 		"Carto Light": cartoMap,
 		"USGS Imagery": USGSMap
 		};
 	    
 
-        //layer control tool
+        //options for base and grouped layers
 	var options = {
- 	 // Make the "Landmarks" group exclusive (use radio inputs)
   	exclusiveGroups: ["Primary Care", "Specialty Care"],
-       // Show a checkbox next to non-exclusive group labels for toggling all
   	groupCheckboxes: true,
 	collapsed: false
 	};
-
+	    
+       //layer control
 	var layers = L.control.groupedLayers(baseLayers, groupedOverlays, options);
 	layers.addTo(map);
 	var selectedOverlay = null;
@@ -228,24 +227,9 @@
 	//scale control
         L.control.scale({imperial: true, metric: true}).addTo(map);
 	    
-       //text box explaining functionality of map
-	L.Control.textbox = L.Control.extend({
-		onAdd: function(map2) {
-			
-		var text = L.DomUtil.create('div');
-		text.id = "info_text";
-		text.innerHTML = "<strong>Zoom in or out to explore your area!</strong>"
-		return text;
-		},
-
-		onRemove: function(map2) {
-			// Nothing to do here
-		}
-	});
-	L.control.textbox = function(opts) { return new L.Control.textbox(opts);}
-	L.control.textbox({ position: 'topmiddle' }).addTo(map);
 	//legend options
         var legend = L.control({ position: "bottomright"});
+	    
         //adding legend to map
         legend.onAdd = function(map) {
           var div = L.DomUtil.create("div", "legend");
