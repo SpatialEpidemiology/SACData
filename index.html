@@ -167,20 +167,27 @@
 		};
 
         //layer control tool
-	var layerControl = L.control.layers(baseLayers,overLayers,{collapsed:false}).addTo(map);
-	var selectedOverlay = null;
-            function updateSelectedOverlay(layer) {
-                      setTimeout(function() {
-                      if (selectedOverlay) map.removeLayer(selectedOverlay); 
-		      selectedOverlay = layer;
-                            }, 1);
-                          }
-			map.on('overlayadd', function(event) {
- 			 updateSelectedOverlay(event.layer)
-			  });
-			map.on('overlayremove', function(event) {
-  			selectedOverlay = null;
-			  });
+	var options = {
+ 	 // Make the "Landmarks" group exclusive (use radio inputs)
+  	exclusiveGroups: ["Primary Care", "Specialty Care"],
+       // Show a checkbox next to non-exclusive group labels for toggling all
+  	groupCheckboxes: true
+	};
+
+	L.control.groupedLayers(baseLayers, overLayers, options).addTo(map);
+	//var selectedOverlay = null;
+         //   function updateSelectedOverlay(layer) {
+           //           setTimeout(function() {
+             //          if (selectedOverlay) map.removeLayer(selectedOverlay); 
+		//       selectedOverlay = layer;
+             //                }, 1);
+            //               }
+		// 	map.on('overlayadd', function(event) {
+ 	// 		 updateSelectedOverlay(event.layer)
+		// 	  });
+	// 		map.on('overlayremove', function(event) {
+  	// 		selectedOverlay = null;
+	// 		  });
         L.control.scale({imperial: true, metric: true}).addTo(map);
         
 	//legend options
