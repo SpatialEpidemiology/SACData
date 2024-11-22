@@ -153,18 +153,23 @@
 		sc19Layer.addData(data);
 	 });
 
-	var primarycare = L.layerGroup([pc16Layer,pc19Layer]);
-	var specialtycare = L.layerGroup([sc16Layer,sc19Layer]);
+	var groupedOverlays = {
+  		"Primary Care": {
+   		 "2016": pc16Layer,
+    		 "2019": pc19Layer
+  		},
+		"Specialty Care": {
+   		 "2016": sc16Layer,
+    		 "2019": sc19Layer
+		}
+		};
+ 
 	 //defining layers for control
          var baseLayers = {
 		"Carto Light": cartoMap,
 		"USGS Imagery": USGSMap
 		};
 	    
-	var overLayers = {
-		"Primary Care": primarycare,
-		"Specialty Care": specialtycare		
-		};
 
         //layer control tool
 	var options = {
@@ -174,7 +179,7 @@
   	groupCheckboxes: true
 	};
 
-	L.control.groupedLayers(baseLayers, overLayers, options).addTo(map);
+	L.control.groupedLayers(baseLayers, groupedOverlays, options).addTo(map);
 	//var selectedOverlay = null;
          //   function updateSelectedOverlay(layer) {
            //           setTimeout(function() {
