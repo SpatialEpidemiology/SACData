@@ -6,8 +6,8 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <script src="plugins/leaflet.groupedlayercontrol.min.js"></script>
-    <link rel="stylesheet" href="plugins/leaflet.groupedlayercontrol.min.css"/>
+    <script src="https://cdn.jsdelivr.net/gh/ismyrnow/leaflet-groupedlayercontrol@gh-pages/dist/leaflet.groupedlayercontrol.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ismyrnow/leaflet-groupedlayercontrol@gh-pages/dist/leaflet.groupedlayercontrol.min.css"/>
     <style>
       html, body {
         height: 100%;
@@ -23,6 +23,10 @@
     .legend {
   padding: 4px 6px;
   font: 12px Arial, Helvetica, sans-serif;
+  border-left:2px solid #666666;
+  border-right:2px solid #666666;
+  border-top:2px solid #666666;
+  border-bottom:2px solid #666666;
   background: white;
   background: rgba(255, 255, 255, 0.8);
   line-height: 22px;
@@ -45,28 +49,40 @@
   height: 18px;
   float: left;
   margin: 0 8px 0 0;
-  opacity: 0.7;
+  opacity: 1;
 }
 
 .legend i.icon {
   background-size: 18px;
   background-color: rgba(255, 255, 255, 1);
 }
+.box{
+    position: absolute;
+    font: 18px Arial, Helvetica, sans-serif;
+    top: 0;
+    z-index: 9999;
+    text-align: center;
+    width: 255px;
+    left: 50%;
+    margin-left: -75px; /* half of the width */
+    background-color:white;
+}
   </style>
   </head>
   <body>
+    <div class="box">Layer loading may be delayed after selection due to large files</div>
     <div id="map"></div>
     <script type="text/javascript">
-	       //OSM+Carto tiles attribution and URL
+	       //Carto tiles attribution and URL
 	    	var osmLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
 		var osmAttrib = '&copy; ' + osmLink;
-	   
-	        var placeholderLink = '<a href="http://openstreetmap.org">Placeholder link to publication</a>'
-		
 		var cartoLink = '<a href="http://cartodb.com/attributions">CartoDB</a>';
 		var cartoURL = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+	        //publication placeholder
+	        var placeholderLink = '<a href="http://openstreetmap.org">Placeholder link to publication</a>';
 		var cartoAttrib = '&copy; ' + osmLink + ' &copy; ' + cartoLink + ' &nbsp; ' + placeholderLink;
-	    		
+	    
+		
 		//USGS tiles attribution and URL
 		var USGSURL = 'https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}';
 		var USGSAttrib = 'Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>' + placeholderLink;
@@ -84,7 +100,8 @@
 	         var pc19Url = 'https://spatialepidemiology.github.io/SACData/assets/pc_tr19_tr.json';
 	    	 var sc16Url = 'https://spatialepidemiology.github.io/SACData/assets/sc_tr16_tr.json';
 	    	 var sc19Url = 'https://spatialepidemiology.github.io/SACData/assets/sc_tr19_tr.json';   
-	         // choropleth style
+	    
+	         // choropleth styles
 	         function getColor1(d) {
                     return d > 300 ? '#fde725' :
                      d > 250 ? '#90d743' :
@@ -105,98 +122,144 @@
                       };
                    }
 	         function getColor2(d) {
-                    return d > 30 ? '#fde725' :
-                     d > 25 ? '#90d743' :
-                     d > 20 ? '#35b779' :
-                     d > 15 ? '#21918c' :
-                     d >  10 ? '#31688e':
-                     d > 5 ?   '#443983':
-                                '#440154';
+                    return d > 300 ? '#fde725' :
+                     d > 250 ? '#90d743' :
+                     d > 200 ? '#35b779' :
+                     d > 150 ? '#21918c' :
+                     d >  100 ? '#31688e':
+                     d > 50 ?   '#443983':
+		     d >= 0 ? '#440154':
+                                '#666666';
                     }
 	          function style2(feature) {
                    return {
-                   fillColor: getColor2(feature.properties.Composite_P2P_Ratio),
+                   fillColor: getColor2(feature.properties.Car_P2P_Ratio),
 		    color: 'black',
 		    opacity: 0.3,
 		    weight: 0.3,
                     fillOpacity: 0.5
                       };
                    }
+	    
 	         //adding map
                  var map = L.map('map',{layers: [cartoMap]}).setView([41.4, -81.7], 8.5);
 	    
 	         //defining geojson layers
-                 var pc16Layer = L.geoJson(null,{style:style1, onEachFeature: function (f, l) {
+                 var pc16LayerComp = L.geoJson(null,{style:style1, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var pc19Layer = L.geoJson(null,{style:style1, onEachFeature: function (f, l) {
+                 var pc19LayerComp = L.geoJson(null,{style:style1, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var sc16Layer = L.geoJson(null,{style:style1, onEachFeature: function (f, l) {
+                 var sc16LayerComp = L.geoJson(null,{style:style1, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var sc19Layer = L.geoJson(null,{style:style1, onEachFeature: function (f, l) {
+                 var sc19LayerComp = L.geoJson(null,{style:style1, onEachFeature: function (f, l) {
+                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
+                 }});
+                 var pc16LayerCar = L.geoJson(null,{style:style2, onEachFeature: function (f, l) {
+                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
+                 }});
+                 var pc19LayerCar = L.geoJson(null,{style:style2, onEachFeature: function (f, l) {
+                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
+                 }});
+                 var sc16LayerCar = L.geoJson(null,{style:style2, onEachFeature: function (f, l) {
+                 l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
+                 }});
+                 var sc19LayerCar = L.geoJson(null,{style:style2, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
 	    
 	 //adding geojsons to map   
          $.getJSON(pc16Url, function(data) {			
-		pc16Layer.addData(data);
+		pc16LayerComp.addData(data);
 	 });
          $.getJSON(pc19Url, function(data) {			
-		pc19Layer.addData(data);
+		pc19LayerComp.addData(data);
  	 });
          $.getJSON(sc16Url, function(data) {			
-		sc16Layer.addData(data);
+		sc16LayerComp.addData(data);
 	 });
          $.getJSON(sc19Url, function(data) {			
-		sc19Layer.addData(data);
+		sc19LayerComp.addData(data);
 	 });
-
-	var primarycare = L.layerGroup([pc16Layer,pc19Layer]);
-	var specialtycare = L.layerGroup([sc16Layer,sc19Layer]);
-	 //defining layers for control
+         $.getJSON(pc16Url, function(data) {			
+		pc16LayerCar.addData(data);
+	 });
+         $.getJSON(pc19Url, function(data) {			
+		pc19LayerCar.addData(data);
+ 	 });
+         $.getJSON(sc16Url, function(data) {			
+		sc16LayerCar.addData(data);
+	 });
+         $.getJSON(sc19Url, function(data) {			
+		sc19LayerCar.addData(data);
+	 });
+        //creating grouped overlayers
+	 var groupedOverlays = {
+  		"Primary Care": {
+   		 "2016 Composite": pc16LayerComp,
+    		 "2019 Composite": pc19LayerComp,
+		 "2016 Car": pc16LayerCar,
+		 "2019 Car": pc19LayerCar
+  		},
+		"Specialty Care": {
+   		 "2016 Composite": sc16LayerComp,
+    		 "2019 Composite": sc19LayerComp,
+		 "2016 Car": sc16LayerCar,
+		 "2019 Car": sc19LayerCar
+		}
+		};
+ 
+	 //defining base layers for control
          var baseLayers = {
 		"Carto Light": cartoMap,
 		"USGS Imagery": USGSMap
 		};
 	    
-	var overLayers = {
-		"Primary Care": primarycare,
-		"Specialty Care": specialtycare		
-		};
 
-        //layer control tool
-	var layerControl = L.control.layers(baseLayers,overLayers,{collapsed:false}).addTo(map);
+        //options for base and grouped layers
+	var options = {
+  	exclusiveGroups: ["Primary Care", "Specialty Care"],
+  	groupCheckboxes: true,
+	collapsed: false
+	};
+	    
+       //layer control
+	var layers = L.control.groupedLayers(baseLayers, groupedOverlays, options);
+	layers.addTo(map);
 	var selectedOverlay = null;
             function updateSelectedOverlay(layer) {
                       setTimeout(function() {
-                      if (selectedOverlay) map.removeLayer(selectedOverlay); 
-		      selectedOverlay = layer;
-                            }, 1);
-                          }
-			map.on('overlayadd', function(event) {
- 			 updateSelectedOverlay(event.layer)
-			  });
-			map.on('overlayremove', function(event) {
-  			selectedOverlay = null;
-			  });
+                       if (selectedOverlay) map.removeLayer(selectedOverlay); 
+		       selectedOverlay = layer;
+                             }, 1);
+                           }
+		 	map.on('overlayadd', function(event) {
+ 	 		 updateSelectedOverlay(event.layer)
+		 	  });
+	 		map.on('overlayremove', function(event) {
+  	 		selectedOverlay = null;
+	 		  });
+	    
+	//scale control
         L.control.scale({imperial: true, metric: true}).addTo(map);
-        
+	    
 	//legend options
         var legend = L.control({ position: "bottomright"});
+	    
         //adding legend to map
         legend.onAdd = function(map) {
           var div = L.DomUtil.create("div", "legend");
-          div.innerHTML += "<h4>Spatial Provider-to-Population Ratio</h4>";
-          div.innerHTML += '<i style="background: #440154"><50</i><span></span><br>';
-	  div.innerHTML += '<i style="background: #443983">50-99</i><span></span><br>';
-	  div.innerHTML += '<i style="background: #31688e">100-149</i><span></span><br>';
-	  div.innerHTML += '<i style="background: #21918c">150-199</i><span></span><br>';
-	  div.innerHTML += '<i style="background: #35b779">200-249</i><span></span><br>';
-	  div.innerHTML += '<i style="background: #90d743">250-299</i><span></span><br>';
-	  div.innerHTML += '<i style="background: #fde725">300+</i><span></span><br>';
-	  div.innerHTML += '<i style="background: #666666">Missing</i><span></span><br>';
+          div.innerHTML += "<h4>Spatial provider-to-population ratio</h4>";
+          div.innerHTML += '<i style="background: #440154"></i><span><50 per 100k population</span><br>';
+	  div.innerHTML += '<i style="background: #443983"></i><span>50-99 per 100k population</span><br>';
+	  div.innerHTML += '<i style="background: #31688e"></i><span>100-149 per 100k population</span><br>';
+	  div.innerHTML += '<i style="background: #21918c"></i><span>150-199 per 100k population</span><br>';
+	  div.innerHTML += '<i style="background: #35b779"></i><span>200-249 per 100k population</span><br>';
+	  div.innerHTML += '<i style="background: #90d743"></i><span>250-299 per 100k population</span><br>';
+	  div.innerHTML += '<i style="background: #fde725"></i><span>300+ per 100k population</span><br>';
+	  div.innerHTML += '<i style="background: #666666"></i><span>Missing</span><br>';
 
 
          return div;

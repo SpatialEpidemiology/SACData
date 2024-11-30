@@ -9,4 +9,4 @@ Figures include:
 1) 2016 spatial access composite + 2016 car-specific spatial access + 2016 car commuting % + 2016 ADI
 2) Change in spatial access composite from 2016 to 2019 in Cleveland, OH; San Francisco, CA; Houston, TX; and Washington, DC.
 
-Interactive web map: spatialepidemiology.github.io/TO_BE_CREATED
+Interactive web map: spatialepidemiology.github.io/SACData
