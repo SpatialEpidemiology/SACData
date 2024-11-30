@@ -114,7 +114,16 @@
                     }
 	          function style1(feature) {
                    return {
-                   fillColor: getColor1(feature.properties.Composite_P2P_Ratio),
+                   fillColor: getColor1(feature.properties.Composite_P2P_Ratio_2016),
+		    color: 'black',
+		    opacity: 0.3,
+		    weight: 0.3,
+                    fillOpacity: 0.5
+                      };
+                   }
+	          function style2(feature) {
+                   return {
+                   fillColor: getColor1(feature.properties.Composite_P2P_Ratio_2019),
 		    color: 'black',
 		    opacity: 0.3,
 		    weight: 0.3,
@@ -131,9 +140,18 @@
 		     d >= 0 ? '#440154':
                                 '#666666';
                     }
-	          function style2(feature) {
+	          function style3(feature) {
                    return {
-                   fillColor: getColor2(feature.properties.Car_P2P_Ratio),
+                   fillColor: getColor2(feature.properties.Car_P2P_Ratio_2016),
+		    color: 'black',
+		    opacity: 0.3,
+		    weight: 0.3,
+                    fillOpacity: 0.5
+                      };
+                   }
+	          function style4(feature) {
+                   return {
+                   fillColor: getColor2(feature.properties.Car_P2P_Ratio_2019),
 		    color: 'black',
 		    opacity: 0.3,
 		    weight: 0.3,
@@ -148,25 +166,25 @@
                  var pc16LayerComp = L.geoJson(null,{style:style1, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var pc19LayerComp = L.geoJson(null,{style:style1, onEachFeature: function (f, l) {
+                 var pc19LayerComp = L.geoJson(null,{style:style2, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
                  var sc16LayerComp = L.geoJson(null,{style:style1, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var sc19LayerComp = L.geoJson(null,{style:style1, onEachFeature: function (f, l) {
+                 var sc19LayerComp = L.geoJson(null,{style:style2, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var pc16LayerCar = L.geoJson(null,{style:style2, onEachFeature: function (f, l) {
+                 var pc16LayerCar = L.geoJson(null,{style:style3, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var pc19LayerCar = L.geoJson(null,{style:style2, onEachFeature: function (f, l) {
+                 var pc19LayerCar = L.geoJson(null,{style:style4, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var sc16LayerCar = L.geoJson(null,{style:style2, onEachFeature: function (f, l) {
+                 var sc16LayerCar = L.geoJson(null,{style:style3, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
-                 var sc19LayerCar = L.geoJson(null,{style:style2, onEachFeature: function (f, l) {
+                 var sc19LayerCar = L.geoJson(null,{style:style4, onEachFeature: function (f, l) {
                  l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
                  }});
 	    
