@@ -262,21 +262,49 @@
 	};
 	    
        //layer control
+	//var layers = L.control.groupedLayers(baseLayers, groupedOverlays, options);
+	//layers.addTo(map);
+	//var selectedOverlay = null;
+          //  function updateSelectedOverlay(layer) {
+            //          setTimeout(function() {
+              //         if (selectedOverlay) map.removeLayer(selectedOverlay); 
+		//       selectedOverlay = layer;
+                  //           }, 1);
+                    //       }
+		 	//map.on('overlayadd', function(event) {
+ 	 		 //updateSelectedOverlay(event.layer)
+		 	  //});
+	 		//map.on('overlayremove', function(event) {
+  	 		//selectedOverlay = null;
+	 		 // });
+	// Layer control setup
 	var layers = L.control.groupedLayers(baseLayers, groupedOverlays, options);
 	layers.addTo(map);
+
 	var selectedOverlay = null;
-            function updateSelectedOverlay(layer) {
-                      setTimeout(function() {
-                       if (selectedOverlay) map.removeLayer(selectedOverlay); 
-		       selectedOverlay = layer;
-                             }, 1);
-                           }
-		 	map.on('overlayadd', function(event) {
- 	 		 updateSelectedOverlay(event.layer)
-		 	  });
-	 		map.on('overlayremove', function(event) {
-  	 		selectedOverlay = null;
-	 		  });
+
+	// Function to update selected overlay
+	function updateSelectedOverlay(layer) {
+ 	 setTimeout(function() {
+	    // If there is a previously selected overlay, remove it
+	    if (selectedOverlay) {
+ 	     map.removeLayer(selectedOverlay);
+ 	   }
+  	  // Set the new layer as the selected overlay
+  	  selectedOverlay = layer;
+	  }, 1); // Timeout ensures layers are removed properly before adding the new one
+	}
+
+	// Event listener for when a new overlay is added
+	map.on('overlayadd', function(event) {
+  		updateSelectedOverlay(event.layer);  // Update selected overlay when a new layer is added
+		});
+
+	// Event listener for when an overlay is removed
+	map.on('overlayremove', function(event) {
+  		selectedOverlay = null;  // Reset the selected overlay when it is removed
+		});
+
 	    
 	//scale control
         L.control.scale({imperial: true, metric: true}).addTo(map);
