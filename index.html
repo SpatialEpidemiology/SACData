@@ -279,17 +279,16 @@
 
 	var selectedOverlay = null;
 
-	// Function to update selected overlay
 	function updateSelectedOverlay(layer) {
- 	 setTimeout(function() {
-	    // If there is a previously selected overlay, remove it
-	    if (selectedOverlay) {
- 	     map.removeLayer(selectedOverlay);
- 	   }
+   	 // If there is a previously selected overlay, remove it
+   	 if (selectedOverlay) {
+    	    map.removeLayer(selectedOverlay);
+   	 }
   	  // Set the new layer as the selected overlay
   	  selectedOverlay = layer;
-	  }, 1); // Timeout ensures layers are removed properly before adding the new one
+  	  map.addLayer(selectedOverlay); // Add the new layer immediately after removal
 	}
+
 
 	// Event listener for when a new overlay is added
 	map.on('overlayadd', function(event) {
