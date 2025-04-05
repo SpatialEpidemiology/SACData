@@ -134,18 +134,18 @@
                    return {
                    fillColor: getColor1(feature.properties.Composite_P2P_Ratio_2016),
 		    color: 'black',
-		    opacity: 0.3,
+		    opacity: 0.5,
 		    weight: 0.3,
-                    fillOpacity: 0.5
+		    fillOpacity: 0.5
                       };
                    }
 	          function style2(feature) {
                    return {
                    fillColor: getColor1(feature.properties.Composite_P2P_Ratio_2019),
 		    color: 'black',
-		    opacity: 0.3,
+		    opacity: 0.5,
 		    weight: 0.3,
-                    fillOpacity: 0.5
+		    fillOpacity: 0.5
                       };
                    }
 	         function getColor2(d) {
@@ -162,18 +162,18 @@
                    return {
                    fillColor: getColor2(feature.properties.Car_P2P_Ratio_2016),
 		    color: 'black',
-		    opacity: 0.3,
+		    opacity: 0.5,
 		    weight: 0.3,
-                    fillOpacity: 0.5
+		    fillOpacity: 0.5
                       };
                    }
 	          function style4(feature) {
                    return {
                    fillColor: getColor2(feature.properties.Car_P2P_Ratio_2019),
 		    color: 'black',
-		    opacity: 0.3,
+		    opacity: 0.5,
 		    weight: 0.3,
-                    fillOpacity: 0.5
+		    fillOpacity: 0.5
                       };
                    }
 	    
@@ -262,21 +262,48 @@
 	};
 	    
        //layer control
+	//var layers = L.control.groupedLayers(baseLayers, groupedOverlays, options);
+	//layers.addTo(map);
+	//var selectedOverlay = null;
+          //  function updateSelectedOverlay(layer) {
+            //          setTimeout(function() {
+              //         if (selectedOverlay) map.removeLayer(selectedOverlay); 
+		//       selectedOverlay = layer;
+                  //           }, 1);
+                    //       }
+		 	//map.on('overlayadd', function(event) {
+ 	 		 //updateSelectedOverlay(event.layer)
+		 	  //});
+	 		//map.on('overlayremove', function(event) {
+  	 		//selectedOverlay = null;
+	 		 // });
+	// Layer control setup
 	var layers = L.control.groupedLayers(baseLayers, groupedOverlays, options);
 	layers.addTo(map);
+
 	var selectedOverlay = null;
-            function updateSelectedOverlay(layer) {
-                      setTimeout(function() {
-                       if (selectedOverlay) map.removeLayer(selectedOverlay); 
-		       selectedOverlay = layer;
-                             }, 1);
-                           }
-		 	map.on('overlayadd', function(event) {
- 	 		 updateSelectedOverlay(event.layer)
-		 	  });
-	 		map.on('overlayremove', function(event) {
-  	 		selectedOverlay = null;
-	 		  });
+
+	function updateSelectedOverlay(layer) {
+   	 // If there is a previously selected overlay, remove it
+   	 if (selectedOverlay) {
+    	    map.removeLayer(selectedOverlay);
+   	 }
+  	  // Set the new layer as the selected overlay
+  	  selectedOverlay = layer;
+  	  map.addLayer(selectedOverlay); // Add the new layer immediately after removal
+	}
+
+
+	// Event listener for when a new overlay is added
+	map.on('overlayadd', function(event) {
+  		updateSelectedOverlay(event.layer);  // Update selected overlay when a new layer is added
+		});
+
+	// Event listener for when an overlay is removed
+	map.on('overlayremove', function(event) {
+  		selectedOverlay = null;  // Reset the selected overlay when it is removed
+		});
+
 	    
 	//scale control
         L.control.scale({imperial: true, metric: true}).addTo(map);
