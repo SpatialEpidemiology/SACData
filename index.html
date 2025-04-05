@@ -260,38 +260,23 @@
   	groupCheckboxes: true,
 	collapsed: false
 	};
-	    
+
        //layer control
-	//var layers = L.control.groupedLayers(baseLayers, groupedOverlays, options);
-	//layers.addTo(map);
-	//var selectedOverlay = null;
-          //  function updateSelectedOverlay(layer) {
-            //          setTimeout(function() {
-              //         if (selectedOverlay) map.removeLayer(selectedOverlay); 
-		//       selectedOverlay = layer;
-                  //           }, 1);
-                    //       }
-		 	//map.on('overlayadd', function(event) {
- 	 		 //updateSelectedOverlay(event.layer)
-		 	  //});
-	 		//map.on('overlayremove', function(event) {
-  	 		//selectedOverlay = null;
-	 		 // });
-	// Layer control setup
 	var layers = L.control.groupedLayers(baseLayers, groupedOverlays, options);
 	layers.addTo(map);
-
 	var selectedOverlay = null;
-
-	function updateSelectedOverlay(layer) {
-   	 // If there is a previously selected overlay, remove it
-   	 if (selectedOverlay) {
-    	    map.removeLayer(selectedOverlay);
-   	 }
-  	  // Set the new layer as the selected overlay
-  	  selectedOverlay = layer;
-  	  map.addLayer(selectedOverlay); // Add the new layer immediately after removal
-	}
+            function updateSelectedOverlay(layer) {
+                      setTimeout(function() {
+                       if (selectedOverlay) map.removeLayer(selectedOverlay); 
+		       selectedOverlay = layer;
+                             }, 1);
+                           }
+		 	map.on('overlayadd', function(event) {
+ 	 		 updateSelectedOverlay(event.layer)
+		 	  });
+	 		map.on('overlayremove', function(event) {
+  	 		selectedOverlay = null;
+	 		  });
 
 
 	// Event listener for when a new overlay is added
