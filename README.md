@@ -2,7 +2,7 @@
 Spatial Access to Care data &amp; maps for 2016 to 2020.
 
 Data includes:
-1) Link to spatial access composite measure + car-specific spatial access for 48 medical provider classifications, including primary care, overall specialty care, and a variety of individual specialty care classifications: TO BE UPLOADED TO HARVARD DATAVERSE COINCIDING WITH PUBLICATION.
+1) Link to spatial access composite measure + car-specific spatial access for 48 medical provider classifications, including primary care, overall specialty care, and a variety of individual specialty care classifications: [Harvard Dataverse link](https://doi.org/10.7910/DVN/I9REMO).
 2) Provider classifications from CMS specialty data
 
 Figures include:
